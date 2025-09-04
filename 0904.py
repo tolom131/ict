@@ -21,7 +21,6 @@ with st.sidebar:
     )
     
     api_key = st.text_input("OpenAI API Key (옵션)", type="password", help="환경변수 OPENAI_API_KEY로도 설정 가능")
-    base_url = st.text_input("Base URL (옵션)", value="", help="OpenAI 호환 서버를 쓰는 경우")
 
     col1, col2 = st.columns(2)
     with col1:
@@ -29,9 +28,9 @@ with st.sidebar:
             st.session_state.messages = []
             st.rerun()
     with col2:
-        demo_fill = st.checkbox("데모 질문 채우기", value=False)
+        demo_fill = st.checkbox("데모 질문 채우기!!", value=False)
 
-st.caption("API 키가 없으면 규칙 기반 에코 봇으로 간단 응답합니다.")
+st.caption("09/2024 기준 ICT 교육 예제")
 
 # ---------------------------
 # 세션 상태 초기화
@@ -61,10 +60,7 @@ def call_openai(messages, model_name, temperature_value, sys_prompt, key, url):
         return None  # 키 없으면 폴백 사용
 
     # 클라이언트 생성
-    if url.strip():
-        client = OpenAI(api_key=key, base_url=url.strip())
-    else:
-        client = OpenAI(api_key=key)
+    client = OpenAI(api_key=key)
 
     # 시스템 프롬프트 삽입
     _messages = [{"role": "system", "content": sys_prompt}] + messages
@@ -106,7 +102,7 @@ def fallback_reply(user_text: str) -> str:
 # ---------------------------
 placeholder = "메시지를 입력하세요…"
 if demo_fill:
-    placeholder = "예) Unity에서 두 오브젝트를 충돌시키는 방법은?"
+    placeholder = "예) Unity에서 두 오브젝트를 충돌시키는 방법은? (C# 코드 예제 포함)"
 
 user_input = st.chat_input(placeholder)
 
@@ -124,7 +120,7 @@ if user_input:
         # OpenAI 시도
         resp = None
         if USE_OPENAI:
-            resp = call_openai(st.session_state.messages, model, temperature, system_prompt, api_key, base_url)
+            resp = call_openai(st.session_state.messages, model, temperature, system_prompt, api_key, None)
 
         if resp is not None:
             # 스트리밍 출력
