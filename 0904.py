@@ -10,7 +10,7 @@ temperature = 0.1  # 응답의 창의성 정도 (0~1)
 model = "gpt-4o"
 
 st.set_page_config(page_title="Streamlit Chatbot", page_icon="💬", layout="centered")
-st.title("💬 Streamlit Chatbot (Minimal)")
+st.title("💬 0904 ICT 교육 챗봇 서비스 예제 (유니티 전용 개발 에이전트)")
 
 with st.sidebar:
     st.subheader("⚙️ 설정")
